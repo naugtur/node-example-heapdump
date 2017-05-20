@@ -1,1 +1,3 @@
-# node-example-heapdump
+# Heapdump exercise
+
+## Getting a heapdump
