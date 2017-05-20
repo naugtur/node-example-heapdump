@@ -2,8 +2,14 @@ const express = require('express')
 const blowingUp = []
 
 const app = express()
-app.get('/', _=> setInterval(_ => blowingUp.push(`
+app.get('/', (req, res) => {
+  res.send(`Let's pretend it's all fine.`)
+
+  setInterval(_ => blowingUp.push(`
     Ok, so that's a pretty obvious memory leak.
     The goal here is to implement saving a heapdump in an environment
      where you can't just connect a debugger.
-    `), 100))
+    `.repeat(100)), 10)
+})
+
+app.listen(8080)
