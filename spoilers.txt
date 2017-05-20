@@ -1,0 +1,58 @@
+##
+ # Try it for yourself first :)
+ #
+ #
+ #
+ #      ####   #####    ####      #    #       ######  #####    ####
+ #     #       #    #  #    #     #    #       #       #    #  #
+ #      ####   #    #  #    #     #    #       #####   #    #   ####
+ #          #  #####   #    #     #    #       #       #####        #
+ #     #    #  #       #    #     #    #       #       #   #   #    #
+ #      ####   #        ####      #    ######  ######  #    #   ####
+ #
+ #                                              ###
+ #       ##    #    #  ######    ##    #####    ###
+ #      #  #   #    #  #        #  #   #    #   ###
+ #     #    #  ######  #####   #    #  #    #    #
+ #     ######  #    #  #       ######  #    #
+ #     #    #  #    #  #       #    #  #    #   ###
+ #     #    #  #    #  ######  #    #  #####    ###
+ #
+
+
+Ex1 ----------------------------------------------
+
+
+app.get('/dump', (req, res) => {
+  const heapdump = require('heapdump')
+  heapdump.writeSnapshot(function (err, filename) {
+    if (err) {
+      console.log('oops, ', err)
+    } else {
+      console.log('dump written to', filename)
+    }
+    res.end()
+  })
+})
+
+WARNING: if you expose triggering heapdump as a http request, make sure it's not
+         publically available. I recommend it's on a separate port that you only
+         route in local network
+
+Once you have heap snapshots, load them into memory tab in chrome/chromium
+devtools in chronological order, select the newer one and switch mode (top left)
+to Compare. Expand two top items on the list (biggest size) and select first
+item on each list. You should quickly find the `blowingUp` reference with large
+retained size.
+
+Ex2 ----------------------------------------------
+
+The analysis starts the same as above, but once you find the item with lots of
+retained size, you need to explore where it's referenced. The tree is
+automatically expanded, you need to close some branches sometimes to find more
+references without scrolling down for a few minutes.
+
+The offending code is related to MemoryStore inside of express-session, which
+is a pretend implementation of session store. With default settings (the
+deprecated ones it's been warning about from the start) every call without
+cookies creates a new session entry, which is never cleaned up in MemoryStore.
