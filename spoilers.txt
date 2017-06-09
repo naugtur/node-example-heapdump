@@ -47,12 +47,15 @@ retained size.
 
 Ex2 ----------------------------------------------
 
-The analysis starts the same as above, but once you find the item with lots of
+The analysis starts the same as above, with taking 2 snapshots.
+Take the snapshots at least 20 seconds apart. Once you find the item with lots of
 retained size, you need to explore where it's referenced. The tree is
 automatically expanded, you need to close some branches sometimes to find more
 references without scrolling down for a few minutes.
 
-The offending code is related to MemoryStore inside of express-session, which
+The offending code is related to `MemoryStore` inside of `express-session`, which
 is a pretend implementation of session store. With default settings (the
 deprecated ones it's been warning about from the start) every call without
-cookies creates a new session entry, which is never cleaned up in MemoryStore.
+cookies creates a new session entry, which is never cleaned up in `MemoryStore`.
+
+See `npm run real-production` too.
