@@ -22,7 +22,18 @@
 
 Ex1 ----------------------------------------------
 
+//Node.js 12+
+app.get('/dump', (req, res) => {
+  require('v8').writeHeapSnapshot()
+  res.end()
+})
 
+OR something like
+
+require('http').createServer(()=>require('v8').writeHeapSnapshot()).listen(11111)
+
+
+//Old Node.js
 app.get('/dump', (req, res) => {
   const heapdump = require('heapdump')
   heapdump.writeSnapshot(function (err, filename) {

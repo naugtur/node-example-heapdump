@@ -1,5 +1,5 @@
 # heapdumps
-heapdump-*
+*.heapsnapshot
 
 # Logs
 logs

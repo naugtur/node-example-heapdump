@@ -1,3 +1,4 @@
+const { writeHeapSnapshot } = require('v8');
 const express = require('express')
 const blowingUp = []
 
