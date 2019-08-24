@@ -47,7 +47,7 @@ app.get('/dump', (req, res) => {
 })
 
 WARNING: if you expose triggering heapdump as a http request, make sure it's not
-         publically available. I recommend it's on a separate port that you only
+         publicly available. I recommend it's on a separate port that you only
          route in local network
 
 Once you have heap snapshots, load them into memory tab in chrome/chromium
