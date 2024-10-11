@@ -14,7 +14,7 @@ npm install
 - Run `npm start`
 - Open [http://localhost:8080](http://localhost:8080)
 - Now try implementing getting a heap snapshot through a http request and prove a leak exists.
-  - Can be done without the `heapdump` package, with this: https://nodejs.org/dist/latest-v12.x/docs/api/v8.html#v8_v8_writeheapsnapshot_filename
+  - use: https://nodejs.org/docs/latest/api/v8.html#v8getheapsnapshotoptions
 
 ## Finding a real issue
 

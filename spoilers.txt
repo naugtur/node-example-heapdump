@@ -22,7 +22,6 @@
 
 Ex1 ----------------------------------------------
 
-//Node.js 12+
 app.get('/snapshot', (req, res) => {
   require('v8').writeHeapSnapshot()
   res.end()
@@ -32,19 +31,6 @@ OR something like
 
 require('http').createServer(()=>require('v8').writeHeapSnapshot()).listen(11111)
 
-
-//Old Node.js
-app.get('/snapshot', (req, res) => {
-  const heapdump = require('heapdump')
-  heapdump.writeSnapshot(function (err, filename) {
-    if (err) {
-      console.log('oops, ', err)
-    } else {
-      console.log('dump written to', filename)
-    }
-    res.end()
-  })
-})
 
 WARNING: if you expose triggering heapdump as a http request, make sure it's not
          publicly available. I recommend it's on a separate port that you only
